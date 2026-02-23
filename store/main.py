@@ -16,7 +16,7 @@ PASSWORD = os.getenv('PASSWORD')
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173",
+    "http://localhost:3000",
 ]
 
 app.add_middleware(
@@ -50,7 +50,7 @@ class Order(HashModel, index=True):
     class Meta:
         database = redis
 
-@app.post('/orders')
+@app.post('/orders', tags=['store'])
 def create(productOrder: ProductOrder, background_tasks: BackgroundTasks):
     req = requests.get(f'http://localhost:8000/product/{productOrder.product_id}')
     product = req.json()
@@ -68,11 +68,11 @@ def create(productOrder: ProductOrder, background_tasks: BackgroundTasks):
     background_tasks.add_task(order_complete, order)
     return order
 
-@app.get('/orders/{pk}')
+@app.get('/orders/{pk}', tags=['store'])
 def get(pk: str):
     return format(pk)
 
-@app.get('/orders')
+@app.get('/orders', tags=['store'])
 def get_all():
     return [format(pk) for pk in Order.all_pks()]
 

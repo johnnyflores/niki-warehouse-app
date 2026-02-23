@@ -14,7 +14,7 @@ PASSWORD = os.getenv('PASSWORD')
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173",
+    "http://localhost:3000",
 ]
 
 app.add_middleware(
@@ -39,15 +39,15 @@ class Product(HashModel, index=True):
     class Meta:
         database = redis
 
-@app.post('/product')
+@app.post('/product', tags=['warehouse'])
 def create(product: Product):
     return product.save()
     
-@app.get('/product/{pk}')
+@app.get('/product/{pk}', tags=['warehouse'])
 def get(pk: str):
     return Product.get(pk)
 
-@app.get('/products')
+@app.get('/products', tags=['warehouse'])
 def get_all():
     return [format(pk) for pk in Product.all_pks()]
 
@@ -60,6 +60,6 @@ def format(pk: str):
         'quantity': product.quantity
     }
 
-@app.delete('/product/{pk}')
+@app.delete('/product/{pk}', tags=['warehouse'])
 def delete(pk: str):
     return Product.delete(pk)
