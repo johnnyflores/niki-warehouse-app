@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { type Product } from "../types/product";
 import { Link } from "react-router-dom";
 import {
@@ -25,40 +25,18 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { useProducts } from "../hooks/useProducts";
 
 type Order = "asc" | "desc";
 
 const Products: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const { products, loading, error, deleteProduct } = useProducts();
   const [search, setSearch] = useState<string>("");
   const [orderBy, setOrderBy] = useState<keyof Product>("id");
   const [order, setOrder] = useState<Order>("asc");
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
-  const [deleteId, setDeleteId] = useState<number | null>(null);
-
-  useEffect(() => {
-    const fetchProducts = async (): Promise<void> => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(`${BASE_URL}/products`);
-        if (!response.ok) throw new Error("Failed to fetch products");
-        const data: Product[] = await response.json();
-        setProducts(data);
-      } catch (err) {
-        setError("Error fetching products.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const filteredProducts = useMemo(() => {
     return products
@@ -75,23 +53,10 @@ const Products: React.FC = () => {
       });
   }, [products, search, orderBy, order]);
 
-  const confirmDelete = async () => {
-    if (deleteId === null) return;
-
-    try {
-      const response = await fetch(`${BASE_URL}/products/${deleteId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Delete failed");
-
-      setProducts((prev) => prev.filter((product) => product.id !== deleteId));
-    } catch (err) {
-      setError("Error deleting product.");
-      console.error(err);
-    } finally {
-      setDeleteId(null);
-    }
+  const confirmDelete = async (id: string | null) => {
+    if (id === null) return;
+    await deleteProduct(id);
+    setDeleteId(null);
   };
 
   const handleSort = (property: keyof Product) => {
@@ -196,7 +161,11 @@ const Products: React.FC = () => {
           <Button onClick={() => setDeleteId(null)} variant="outlined">
             Cancel
           </Button>
-          <Button color="error" onClick={confirmDelete} variant="outlined">
+          <Button
+            color="error"
+            onClick={() => confirmDelete(deleteId)}
+            variant="outlined"
+          >
             Delete
           </Button>
         </DialogActions>
