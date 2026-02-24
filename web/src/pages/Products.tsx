@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { type Product } from "../types/product";
+import { type Product } from "@/types/product";
 import { Link } from "react-router-dom";
 import {
   Alert,
@@ -25,7 +25,7 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useProducts } from "../hooks/useProducts";
+import { useProducts } from "@/hooks/useProducts";
 
 type Order = "asc" | "desc";
 

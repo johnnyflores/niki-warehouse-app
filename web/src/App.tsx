@@ -1,8 +1,8 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { AppBar, Toolbar, Button, Container } from "@mui/material";
-import Products from "./pages/Products";
-import ProductCreate from "./pages/ProductCreate";
-import Order from "./pages/Order";
+import Products from "@/pages/Products";
+import ProductCreate from "@/pages/ProductCreate";
+import Order from "@/pages/Order";
 
 function App() {
   return (

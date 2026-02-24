@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import type { Product } from "../types/product";
+import type { Product } from "@/types/product";
 
 const PRODUCT_URL = import.meta.env.VITE_PRODUCT_URL;
 
