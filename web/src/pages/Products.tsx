@@ -170,8 +170,8 @@ const Products: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Button sx={{ mt: 3 }} component={Link} to="/orders" variant="outlined">
-        Go to Orders
+      <Button sx={{ mt: 3 }} component={Link} to="/order" variant="outlined">
+        Order
       </Button>
     </Container>
   );
