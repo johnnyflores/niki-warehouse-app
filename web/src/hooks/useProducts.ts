@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import type { Product } from "../types/product";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const PRODUCT_URL = import.meta.env.VITE_PRODUCT_URL;
 
 interface UseProductsReturn {
   products: Product[];
@@ -21,7 +21,7 @@ export const useProducts = (): UseProductsReturn => {
     setError(null);
 
     try {
-      const response = await fetch(`${BASE_URL}/products`);
+      const response = await fetch(`${PRODUCT_URL}/products`);
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }
@@ -38,7 +38,7 @@ export const useProducts = (): UseProductsReturn => {
 
   const deleteProduct = useCallback(async (id: string) => {
     try {
-      const response = await fetch(`${BASE_URL}/product/${id}`, {
+      const response = await fetch(`${PRODUCT_URL}/product/${id}`, {
         method: "DELETE",
       });
 

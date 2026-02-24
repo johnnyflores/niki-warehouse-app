@@ -9,7 +9,7 @@ import {
   Alert,
 } from "@mui/material";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const PRODUCT_URL = import.meta.env.VITE_PRODUCT_URL;
 
 const ProductCreate: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -29,7 +29,7 @@ const ProductCreate: React.FC = () => {
     try {
       const body = JSON.stringify({ name, price, quantity });
 
-      const response = await fetch(`${BASE_URL}/product`, {
+      const response = await fetch(`${PRODUCT_URL}/product`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

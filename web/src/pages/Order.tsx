@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import type { Product } from "../types/product";
 
-const PRODUCT_URL = import.meta.env.VITE_BASE_URL;
+const PRODUCT_URL = import.meta.env.VITE_PRODUCT_URL;
 const ORDER_URL = import.meta.env.VITE_ORDER_URL;
 
 const Order: React.FC = () => {
