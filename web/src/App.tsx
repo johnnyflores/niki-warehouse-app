@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { AppBar, Toolbar, Button, Container } from "@mui/material";
 import Products from "./pages/Products";
+import ProductCreate from "./pages/ProductCreate";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Container sx={{ mt: 4 }}>
         <Routes>
           <Route path="/products" element={<Products />} />
+          <Route path="/create" element={<ProductCreate />} />
         </Routes>
       </Container>
     </>
